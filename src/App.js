@@ -1,41 +1,53 @@
 import React, { Component } from 'react'
 
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
+
+import Home from './Home'
+import About from './About'
+import Products from './Products'
 
 class App extends Component {
   render() {
     return (
-      <div>
-          <nav className='navbar navbar-expand-lg navbar-dark bg-dark'>
+      <Router>
+          <div>
+            <nav className='navbar navbar-expand-lg navbar-dark bg-dark'>
+              <div className='container'>
+                
+                <div className='navbar-header'>
+                  <Link to='/' className='navbar-brand'>Products</Link>
+                </div>
+                <div className='collapse navbar-collapse'>
+                  <ul className='nav navbar-nav'>
+                    
+                    <li className='nav-item'>
+                      <Link className='nav-link' to='/'>Home</Link>
+                    </li>
+
+                    <li className='nav-item'>
+                      <Link className='nav-link' to='/products'>Products</Link>
+                    </li>
+
+                    <li className='nav-item'>
+                      <Link className='nav-link' to='/about'>About</Link>
+                    </li>
+
+                  </ul>
+                </div>
+              </div>
+            </nav>
+
             <div className='container'>
-              
-              <div className='navbar-header'>
-                <a href='/' className='navbar-brand'>Products</a>
-              </div>
-              <div className='collapse navbar-collapse'>
-                <ul className='nav navbar-nav'>
-                  
-                  <li className='nav-item'>
-                    <a className='nav-link' href='/'>Home</a>
-                  </li>
-
-                  <li className='nav-item'>
-                    <a className='nav-link' href='/'>Products</a>
-                  </li>
-
-                  <li className='nav-item'>
-                    <a className='nav-link' href='/'>About</a>
-                  </li>
-
-                </ul>
-              </div>
+              <Route exact path='/' component={Home} />
+              <Route path='/products' component={Products} />
+              <Route exact path='/about' component={About} />
             </div>
-          </nav>
-
-          <div className='container'>
-            <h1>Manager products</h1>
-          </div>
-
-      </div>
+          </div>  
+      </Router>
     )
   }
 }
