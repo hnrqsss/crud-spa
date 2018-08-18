@@ -1,5 +1,21 @@
 {
-    "products": [],
+    "products": [
+        {
+            "id": 1,
+            "product": "rice",
+            "category": 1
+        },
+        {
+            "id": 2,
+            "product": "bean",
+            "category": 1
+        },
+        {
+            "id": 3,
+            "product": "soap",
+            "category": 2
+        }
+    ],
     "categories": [
         {
             "id": 1,
@@ -8,6 +24,10 @@
         {
             "id": 2,
             "category": "cleaner"
+        },
+        {
+            "id": 3,
+            "category": "other"
         }
     ]
 }
