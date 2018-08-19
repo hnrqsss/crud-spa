@@ -16,6 +16,7 @@ export default class Products extends Component {
 
         this.handleNewCategory = this.handleNewCategory.bind(this)
         this.loadCategories    = this.loadCategories.bind(this)
+        this.removeCategory    = this.removeCategory.bind(this)
     }
 
     //when component is render
@@ -32,8 +33,35 @@ export default class Products extends Component {
                 .catch(err => console.log('Error: '+err))
     }
 
+    removeCategory(category) {
+        axios
+            .delete('http://localhost:3001/categories/'+category.id)
+                .then(() => this.loadCategories())
+                .catch(err => console.log(err))
+        
+    }
+
     renderCategory(category) {
-        return <li key={category.id}><Link to={`/products/category/${category.id}`} >{category.category}</Link></li>
+        return (
+                <tr key={category.id} >
+                    <td>
+                        <Link to={`/products/category/${category.id}`} >{category.category} </Link>
+                    </td>
+                    <td>
+                        <button className='btn btn-success btn-sm'>
+                            <i className="fas fa-edit"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <button 
+                            className='btn btn-danger btn-sm' 
+                            onClick={() => this.removeCategory(category)}
+                        >
+                            <i className="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
+                </tr>    
+            )
     }
     
     handleNewCategory(event) {
@@ -57,16 +85,19 @@ export default class Products extends Component {
                 
                 <div className='col-md-2'>
                     <h3>Categories</h3>
-                    <ul>
-                        {categories.map(cat => this.renderCategory(cat))}
-                    </ul>
-
-                    <div className='well'>
+                    <table>
+                        <tbody>
+                            {categories.map(cat => this.renderCategory(cat))}
+                        </tbody>
+                    </table>
+        
+                    <div className='breadcrumb'>
                         <input 
                             type='text' 
                             ref='category' 
                             placeholder='New category' 
                             onKeyUp={this.handleNewCategory}
+                            className='form-control'
                             />
                     </div>
 

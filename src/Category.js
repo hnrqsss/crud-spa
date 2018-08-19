@@ -50,7 +50,7 @@ class Category extends Component {
     }
 
     renderProducts(product) {
-        return <li key={product.id}>{product.product}</li>
+        return <li className='breadcrumb' key={product.id}>{product.product}</li>
     }
 
     render() {
