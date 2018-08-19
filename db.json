@@ -3,12 +3,12 @@
     {
       "id": 1,
       "product": "rice",
-      "category": 1
+      "category": 3
     },
     {
       "id": 2,
       "product": "bean",
-      "category": 1
+      "category": 3 
     },
     {
       "id": 3,
@@ -18,12 +18,16 @@
   ],
   "categories": [
     {
-      "id": 1,
-      "category": "food"
-    },
-    {
       "id": 2,
       "category": "cleaner"
+    },
+    {
+      "category": "food",
+      "id": 3
+    },
+    {
+      "category": "novo",
+      "id": 4
     }
   ]
 }

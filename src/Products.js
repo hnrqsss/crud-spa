@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import { Route, Link } from 'react-router-dom'
 
-import Api from './Api'
 import ProductsHome from './ProductsHome'
 import Category from './Category'
 
@@ -10,33 +9,13 @@ export default class Products extends Component {
     constructor(props) {
         super(props)
 
-        this.state = {
-            categories: []
-        }
-
         this.handleNewCategory = this.handleNewCategory.bind(this)
-        this.loadCategories    = this.loadCategories.bind(this)
-        this.removeCategory    = this.removeCategory.bind(this)
+        this.renderCategory    = this.renderCategory.bind(this)
     }
 
     //when component is render
     componentDidMount() {
-        this.loadCategories()
-    }
-
-    loadCategories() {
-        Api.getCategories()
-            .then(res => {
-                this.setState({categories: res.data})
-            })
-            .catch(err => console.log('Error: '+err))
-    }
-
-    removeCategory(category) {
-        Api.deleteCategory(category.id)
-            .then(() => this.loadCategories())
-            .catch(err => console.log(err))
-        
+        this.props.loadCategories()
     }
 
     renderCategory(category) {
@@ -53,7 +32,7 @@ export default class Products extends Component {
                     <td>
                         <button 
                             className='btn btn-danger btn-sm' 
-                            onClick={() => this.removeCategory(category)}
+                            onClick={() => this.props.removeCategory(category)}
                         >
                             <i className="fas fa-trash-alt"></i>
                         </button>
@@ -64,19 +43,14 @@ export default class Products extends Component {
     
     handleNewCategory(event) {
         if (event.keyCode === 13) {
-            const category = this.refs.category.value
-            Api.addCategory(category)
-                .then(res => {
-                    this.refs.category.value = ''
-                    this.loadCategories()
-                })
-                .catch(error => console.log(error))
+            this.props.addCategory(this.refs.category.value)    
+            this.refs.category.value = ''
         }
     }
 
     render() {
-        const { match } = this.props
-        const { categories } = this.state
+        const { match,categories } = this.props
+        
         return(
             <div className='row'>
                 
@@ -90,8 +64,8 @@ export default class Products extends Component {
         
                     <div className='breadcrumb'>
                         <input 
-                            type='text' 
-                            ref='category' 
+                            type='text'
+                            ref='category'
                             placeholder='New category' 
                             onKeyUp={this.handleNewCategory}
                             className='form-control'

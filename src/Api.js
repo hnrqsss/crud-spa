@@ -9,7 +9,7 @@ const Api = {
     getCategories:           ()         => api.get('categories'),
     getCategoriesById:       (id)       => api.get('categories/'+id),
     deleteCategory:          (id)       => api.delete('categories/'+id),
-    addCategory:             (category) => api.post('categories',{category}),
+    addCategory:             (category) => api.post('categories', {category}),
     
     // products
     getProducts:             ()         => api.get('products'),

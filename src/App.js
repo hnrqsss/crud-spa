@@ -11,6 +11,42 @@ import About from './About'
 import Products from './Products'
 
 class App extends Component {
+
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      categories: []
+    }
+
+    this.loadCategories = this.loadCategories.bind(this)
+    this.removeCategory = this.removeCategory.bind(this)
+    this.addCategory    = this.addCategory.bind(this)
+  }
+
+  loadCategories() {
+    this.props.api
+        .getCategories()
+            .then(res => {
+                this.setState({categories: res.data})
+            })
+            .catch(err => console.log('Error: '+err))
+  }
+
+  removeCategory(category) {
+        this.props.api
+            .deleteCategory(category.id)
+                .then(() => this.loadCategories())
+                .catch(err => console.log(err))
+        
+  }
+
+  addCategory(category) {
+    this.props.api.addCategory(category)
+      .then(() => this.loadCategories())
+      .catch(err => console.log(err))
+  }
+  
   render() {
     return (
       <Router>
@@ -43,7 +79,16 @@ class App extends Component {
 
             <div className='container'>
               <Route exact path='/' component={Home} />
-              <Route path='/products' component={Products} />
+              <Route path='/products' render={(props) => {
+                  return (<Products 
+                            {...props} 
+                            loadCategories={this.loadCategories}
+                            removeCategory={this.removeCategory} 
+                            addCategory={this.addCategory}
+                            categories={this.state.categories} 
+                            />)
+                  }          
+                } />
               <Route exact path='/about' component={About} />
             </div>
           </div>  

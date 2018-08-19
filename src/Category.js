@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import axios from 'axios'
 
 import Api from './Api'
 
@@ -24,23 +23,25 @@ class Category extends Component {
     }
 
     loadProducts(id) {
-        Api.getProductsByCategoryId(id)
-            .then(res => {
-                this.setState({
-                    products : res.data
+        Api
+            .getProductsByCategoryId(id)
+                .then(res => {
+                    this.setState({
+                        products : res.data
+                    })
                 })
-            })
-            .catch(err => console.log(err))
+                .catch(err => console.log(err))
     }
 
     loadCategories(id) {
-        Api.getCategoriesById(id)
-            .then(res => {
-                this.setState({
-                    categories : res.data
+        Api
+            .getCategoriesById(id)
+                .then(res => {
+                    this.setState({
+                        categories : res.data
+                    })
                 })
-            })
-            .catch(err => console.log(err))
+                .catch(err => console.log(err))
     }
 
     componentWillReceiveProps(newProps) {
