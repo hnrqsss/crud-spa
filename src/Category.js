@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 
+import Api from './Api'
 
 class Category extends Component {
 
@@ -23,25 +24,23 @@ class Category extends Component {
     }
 
     loadProducts(id) {
-        axios
-            .get('http://localhost:3001/products?category='+id)
-                .then(res => {
-                    this.setState({
-                        products : res.data
-                    })
+        Api.getProductsByCategoryId(id)
+            .then(res => {
+                this.setState({
+                    products : res.data
                 })
-                .catch(err => console.log(err))
+            })
+            .catch(err => console.log(err))
     }
 
     loadCategories(id) {
-        axios
-            .get('http://localhost:3001/categories/'+id)
-                .then(res => {
-                    this.setState({
-                        categories : res.data
-                    })
+        Api.getCategoriesById(id)
+            .then(res => {
+                this.setState({
+                    categories : res.data
                 })
-                .catch(err => console.log(err))
+            })
+            .catch(err => console.log(err))
     }
 
     componentWillReceiveProps(newProps) {
@@ -54,7 +53,6 @@ class Category extends Component {
     }
 
     render() {
-        const { match } = this.props
         const { products, categories } = this.state
 
         return(

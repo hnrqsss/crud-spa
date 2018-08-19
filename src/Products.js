@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { Route, Link } from 'react-router-dom'
-import axios from 'axios'
 
+import Api from './Api'
 import ProductsHome from './ProductsHome'
 import Category from './Category'
 
@@ -25,19 +25,17 @@ export default class Products extends Component {
     }
 
     loadCategories() {
-        axios
-            .get('http://localhost:3001/categories')
-                .then(res => {
-                    this.setState({categories: res.data})
-                })
-                .catch(err => console.log('Error: '+err))
+        Api.getCategories()
+            .then(res => {
+                this.setState({categories: res.data})
+            })
+            .catch(err => console.log('Error: '+err))
     }
 
     removeCategory(category) {
-        axios
-            .delete('http://localhost:3001/categories/'+category.id)
-                .then(() => this.loadCategories())
-                .catch(err => console.log(err))
+        Api.deleteCategory(category.id)
+            .then(() => this.loadCategories())
+            .catch(err => console.log(err))
         
     }
 
@@ -67,13 +65,12 @@ export default class Products extends Component {
     handleNewCategory(event) {
         if (event.keyCode === 13) {
             const category = this.refs.category.value
-            axios
-                .post('http://localhost:3001/categories',{category})
-                    .then(res => {
-                        this.refs.category.value = ''
-                        this.loadCategories()
-                    })
-                    .catch(error => console.log(error))
+            Api.addCategory(category)
+                .then(res => {
+                    this.refs.category.value = ''
+                    this.loadCategories()
+                })
+                .catch(error => console.log(error))
         }
     }
 
